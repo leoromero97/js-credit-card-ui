@@ -6,8 +6,8 @@
     <title>Credit Card Checkout UI</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   </head>
-  <body class="min-h-100vh">
-    <div class="isolate bg-gray-900 px-6 py-24 sm:py-32 lg:px-8">
+  <body class="min-h-100vh items-center justify-center isolate bg-gray-900">
+    <div class=" px-6 py-24 sm:py-32 lg:px-8 items-center flex flex-col gap-10">
       <div class="mx-auto max-w-2xl text-center">
         <h1
           class="text-4xl font-semibold tracking-tight text-balance text-white sm:text-5xl"
@@ -16,7 +16,7 @@
         </h1>
         <p class="mt-2 text-lg/8 text-gray-400">¡Casi terminamos!</p>
       </div>
-      <form action="#" method="POST" class="mx-auto mt-10 max-w-xl sm:mt-16">
+      <form action="#" method="POST" class="flex flex-col gap-4 w-full max-w-xl">
         <div
           class="border border-white/30 rounded-md bg-white/10 backdrop-blur-sm p-3 shadow-lg mb-12"
         >
@@ -26,13 +26,12 @@
           </div>
 
           <div class="mt-10 flex flex-col gap-y-2">
-            <span id="cardNumber" class="text-white font-semibold text-2xl"
-              >4242 4242 4242 4242</span
+            <span class="text-white font-semibold text-2xl"
+              id="cardNumberValue">**** **** **** ****</span
             >
             <div class="flex flex-row justify-between items-center">
               <div>
-                <span id="cardName" class="text-white text-sm">Nombre</span>
-                <span class="text-white text-sm">apellido</span>
+                <span id="cardName" class="text-white text-sm">Nombre titular</span>
               </div>
 
               <time
@@ -43,14 +42,15 @@
             </div>
           </div>
         </div>
-        <div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
-          <div class="sm:col-span-2">
+
+        <div class="grid grid-cols-1 gap-x-8 gap-y-6">
+          <div class="col-span-2">
             <label
               for="cardNumber"
               class="block text-sm/6 font-semibold text-white"
               >Número de tarjeta</label
             >
-            <div class="mt-2.5">
+            <div class="mt-2.5" id="inputCardNumberContainer">
               <input
                 id="cardNumber"
                 type="text"
@@ -60,31 +60,31 @@
               />
             </div>
           </div>
-          <div>
+          <div class="col-span-2">
             <label
-              for="first-name"
+              for="cardHolder"
               class="block text-sm/6 font-semibold text-white"
               >Nombre títular</label
             >
-            <div class="mt-2.5">
+            <div class="mt-2.5" id="inputCardHolderContainer">
               <input
-                id="first-name"
+                id="cardHolder"
                 type="text"
-                name="first-name"
+                name="cardHolder"
                 autocomplete="given-name"
                 class="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500"
               />
             </div>
           </div>
 
-          <div class="flex flex-row w-full grid grid-cols-2 gap-10">
-            <div>
+          <div class="w-full grid grid-cols-2 col-span-2 gap-10">
+            <div class="w-full">
               <label
                 for="cardExpiredDate"
                 class="block text-sm/6 font-semibold text-white"
                 >Fecha de vencimiento</label
               >
-              <div class="mt-2.5">
+              <div class="mt-2.5" id="inputCardExpiredDateContainer">
                 <input
                   id="cardExpiredDate"
                   type="text"
@@ -100,48 +100,28 @@
                 class="block text-sm/6 font-semibold text-white"
                 >CVV</label
               >
-              <div class="mt-2.5">
+              <div class="mt-2.5" id="inputCardCodeContainer">
                 <input
                   id="cardCode"
                   type="text"
                   name="cardCode"
+                  inputmode="numeric"
+                  autocomplete="one-time-code"
                   class="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500"
                 />
               </div>
             </div>
           </div>
-          <div class="flex gap-x-4 sm:col-span-2">
-            <div class="flex h-6 items-center">
-              <div
-                class="group relative inline-flex w-8 shrink-0 rounded-full bg-white/5 p-px inset-ring inset-ring-white/10 outline-offset-2 outline-indigo-500 transition-colors duration-200 ease-in-out has-checked:bg-indigo-500 has-focus-visible:outline-2"
-              >
-                <span
-                  class="size-4 rounded-full bg-white shadow-xs ring-1 ring-gray-900/5 transition-transform duration-200 ease-in-out group-has-checked:translate-x-3.5"
-                ></span>
-                <input
-                  id="agree-to-policies"
-                  type="checkbox"
-                  name="agree-to-policies"
-                  aria-label="Agree to policies"
-                  class="absolute inset-0 appearance-none focus:outline-hidden"
-                />
-              </div>
-            </div>
-            <label for="agree-to-policies" class="text-sm/6 text-gray-400">
-              Quiero guardar este medio de pago.
-              <a
-                href="#"
-                class="font-semibold whitespace-nowrap text-indigo-400"
-                >Política de privacidad</a
-              >.
-            </label>
-          </div>
+
+
+
         </div>
+
         <div class="mt-10">
           <button
             id="buttonSubmit"
             type="submit"
-            class="block w-full rounded-md bg-indigo-500 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-xs hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+            class="block w-full rounded-md bg-indigo-500 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-xs hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 cursor-pointer"
           >
             Pagar
           </button>
@@ -149,4 +129,5 @@
       </form>
     </div>
   </body>
+  <script src="./script.js"></script>
 </html>
