@@ -18,7 +18,7 @@
       </div>
       <form action="#" method="POST" class="flex flex-col gap-4 w-full max-w-xl">
         <div
-          class="border border-white/30 rounded-md bg-white/10 backdrop-blur-sm p-3 shadow-lg mb-12"
+          class="border border-white/30 rounded-md bg-white/10 backdrop-blur-sm px-5 py-3 shadow-lg mb-12"
         >
           <div class="justify-between flex flex-row items-center">
             <div class="h-6 w-8 bg-amber-300 rounded-sm"></div>
@@ -35,14 +35,14 @@
               </div>
 
               <time
-                class="text-white text-sm"
+                id="cardExpiredDateValue"
+                class="text-white text-sm hidden"
                 datetime="2027-12-14T16:44:00-03:00"
                 >12/27</time
               >
             </div>
           </div>
         </div>
-
         <div class="grid grid-cols-1 gap-x-8 gap-y-6">
           <div class="col-span-2">
             <label
@@ -90,6 +90,7 @@
                   type="text"
                   name="cardExpiredDate"
                   class="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500"
+                  maxlength="4"
                 />
               </div>
             </div>
@@ -103,20 +104,17 @@
               <div class="mt-2.5" id="inputCardCodeContainer">
                 <input
                   id="cardCode"
-                  type="text"
+                  type="password"
                   name="cardCode"
                   inputmode="numeric"
                   autocomplete="one-time-code"
                   class="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500"
+                  maxlength="3"
                 />
               </div>
             </div>
           </div>
-
-
-
         </div>
-
         <div class="mt-10">
           <button
             id="buttonSubmit"

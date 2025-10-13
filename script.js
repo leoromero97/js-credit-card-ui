@@ -1,12 +1,12 @@
 document.addEventListener("DOMContentLoaded", function () {
-  console.log("logs");
   // Selecionar los elementos de la UI
   const inputCardNumber = document.querySelector("#cardNumber");
   const inputHolder = document.querySelector("#cardHolder");
   const inputExpiredDate = document.querySelector("#cardExpiredDate");
   const inputCardCode = document.querySelector("#cardCode");
   const cardNumberValue = document.querySelector("#cardNumberValue");
-    const cardName = document.querySelector("#cardName");
+  const cardName = document.querySelector("#cardName");
+  const cardExpiredDateValue = document.querySelector("#cardExpiredDateValue");
 
   // Asignar eventos
   inputCardNumber.addEventListener("blur", validate);
@@ -41,7 +41,6 @@ document.addEventListener("DOMContentLoaded", function () {
       event.target.id,
       event.target.parentElement
     );
-    console.log("El valor es: ", event.target.value);
     return;
   }
 
@@ -77,28 +76,42 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     if (id === "cardHolder") {
-      const regex = /^\d{16}$/;
+      const regex = /^[A-Za-zÁÉÍÓÚáéíóúÑñÜü\s]{6,32}$/;
       if (!regex.test(value)) {
         showAlert(
-          "El número de tarjeta debe tener exactamente 16 dígitos numéricos",
+          "El titular de la tarjeta debe tener más de 6 dígitos",
           elementRef
         );
         return;
       }
-      addCardNumber(value);
+      addCardHolder(value);
       return;
     }
 
-  }
-
-  function clearCardNumber() {
-    if (!cardNumberValue.textContent.includes("*")) {
-      cardNumberValue.textContent = "**** **** **** ****";
+    if (id === "cardExpiredDate") {
+      const regexLength = /^\d{4}$/;
+      if (regexLength.test(value)) {
+        const newValue = value.slice(0, 2) + "/" + value.slice(2, 4);
+        addCardExpiredDate(newValue);
+        return;
+      }
+      return;
     }
   }
   function addCardNumber(value) {
     if (cardNumberValue.textContent.includes("*")) {
       cardNumberValue.textContent = value.replace(/(\d{4})(?=\d)/g, "$1 ");
+    }
+  }
+  function addCardHolder(value) {
+    if (cardName.textContent.includes("Nombre")) {
+      cardName.textContent = value.trim();
+    }
+  }
+  function addCardExpiredDate(value) {
+    if (cardExpiredDateValue.classList.contains("hidden")) {
+      cardExpiredDateValue.textContent = value.trim();
+      cardExpiredDateValue.classList.replace("hidden", "flex");
     }
   }
 });
