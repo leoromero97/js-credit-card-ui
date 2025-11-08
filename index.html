@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Credit Card Checkout UI</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="./css/spiner.css">
   </head>
   <body class="min-h-100vh items-center justify-center isolate bg-gray-900">
-    <div class=" px-6 py-24 sm:py-32 lg:px-8 items-center flex flex-col gap-10">
+    <div class="px-6 py-16 lg:px-8 items-center flex flex-col gap-10">
       <div class="mx-auto max-w-2xl text-center">
         <h1
           class="text-4xl font-semibold tracking-tight text-balance text-white sm:text-5xl"
@@ -16,22 +17,34 @@
         </h1>
         <p class="mt-2 text-lg/8 text-gray-400">¡Casi terminamos!</p>
       </div>
-      <form action="#" method="POST" class="flex flex-col gap-4 w-full max-w-xl">
+      <form
+        id="form"
+        action="#"
+        method="POST"
+        class="flex flex-col gap-4 w-full max-w-md"
+      >
         <div
           class="border border-white/30 rounded-md bg-white/10 backdrop-blur-sm px-5 py-3 shadow-lg mb-12"
         >
           <div class="justify-between flex flex-row items-center">
             <div class="h-6 w-8 bg-amber-300 rounded-sm"></div>
-            <img src="/assets//mastercard-logo.svg" alt="Logo de MasterCard" />
+            <img
+              src="https://1000marcas.net/wp-content/uploads/2019/12/logo-Mastercard.png"
+              alt="Logo de MasterCard"
+              height="24px"
+              class="h-6 w-fit"
+            />
           </div>
 
           <div class="mt-10 flex flex-col gap-y-2">
-            <span class="text-white font-semibold text-2xl"
-              id="cardNumberValue">**** **** **** ****</span
+            <span class="text-white font-semibold text-2xl" id="cardNumberValue"
+              >**** **** **** ****</span
             >
             <div class="flex flex-row justify-between items-center">
               <div>
-                <span id="cardName" class="text-white text-sm">Nombre titular</span>
+                <span id="cardName" class="text-white text-sm"
+                  >Nombre titular</span
+                >
               </div>
 
               <time
@@ -119,10 +132,17 @@
           <button
             id="buttonSubmit"
             type="submit"
-            class="block w-full rounded-md bg-indigo-500 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-xs hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 cursor-pointer"
+            class="block w-full rounded-md bg-indigo-500 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-xs valid:hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 hover:cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+            disabled
           >
             Pagar
           </button>
+          <div id="spinnerContainer" class="hidden items-center justify-center absolute w-full h-full top-0 left-0 bg-black opacity-70">
+            <div class="spinner">
+              <div class="dot1"></div>
+              <div class="dot2"></div>
+            </div>
+          </div>
         </div>
       </form>
     </div>

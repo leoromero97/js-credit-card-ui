@@ -7,12 +7,22 @@ document.addEventListener("DOMContentLoaded", function () {
   const cardNumberValue = document.querySelector("#cardNumberValue");
   const cardName = document.querySelector("#cardName");
   const cardExpiredDateValue = document.querySelector("#cardExpiredDateValue");
+  const buttonSubmit = document.querySelector("#buttonSubmit");
+  const form = document.querySelector("#form");
+  const spinnerContainer = document.querySelector("#spinnerContainer");
+  let checkouFormData = {
+    cardNumber: "",
+    cardHolder: "",
+    cardExpiredDate: "",
+    cardCode: "",
+  };
 
   // Asignar eventos
-  inputCardNumber.addEventListener("blur", validate);
+  inputCardNumber.addEventListener("input", validate);
   inputHolder.addEventListener("blur", validate);
-  inputExpiredDate.addEventListener("blur", validate);
-  inputCardCode.addEventListener("blur", validate);
+  inputExpiredDate.addEventListener("input", validate);
+  inputCardCode.addEventListener("input", validate);
+  form.addEventListener("submit", submitForm);
 
   function validate(event) {
     const messageByInputId = {
@@ -26,22 +36,30 @@ document.addEventListener("DOMContentLoaded", function () {
         `El campo ${messageByInputId[event.target.id]} es obligatorio`,
         event.target.parentElement
       );
+      checkouFormData[event.target.id] = "";
+      checkFormData();
       return;
     }
     if (event.target.value.trim() === undefined) {
-      console.log(
+      showAlert(
         `El campo ${messageByInputId[event.target.id]} es obligatorio`,
         event.target.parentElement
       );
+      checkouFormData[event.target.id] = "";
+      checkFormData();
       return;
     }
+
     clearAlert(event.target.parentElement);
     fieldsRegex(
       event.target.value,
       event.target.id,
       event.target.parentElement
     );
-    return;
+
+    //asignar los valores
+    checkouFormData[event.target.id] = event.target.value.trim().toLowerCase();
+    checkFormData();
   }
 
   function showAlert(message, elementRef) {
@@ -53,7 +71,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // Agregar el error abajo de cada input
     elementRef.appendChild(error);
   }
-
   function clearAlert(elementRef) {
     const supportingTextError = elementRef.querySelector(".text-red-300");
     if (supportingTextError) {
@@ -105,7 +122,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
   function addCardHolder(value) {
     if (cardName.textContent.includes("Nombre")) {
-      cardName.textContent = value.trim();
+      cardName.textContent = value.trim().toUpperCase();
     }
   }
   function addCardExpiredDate(value) {
@@ -113,5 +130,62 @@ document.addEventListener("DOMContentLoaded", function () {
       cardExpiredDateValue.textContent = value.trim();
       cardExpiredDateValue.classList.replace("hidden", "flex");
     }
+  }
+
+  function checkFormData() {
+    if (Object.values(checkouFormData).includes("")) {
+      buttonSubmit.classList.add("opacity-50");
+      buttonSubmit.disabled = true;
+      return;
+    }
+    buttonSubmit.classList.remove("opacity-50");
+    buttonSubmit.disabled = false;
+  }
+
+  function submitForm(e) {
+    e.preventDefault();
+    spinnerContainer.classList.add("flex");
+    spinnerContainer.classList.remove("hidden");
+
+    setTimeout(() => {
+      spinnerContainer.classList.remove("flex");
+      spinnerContainer.classList.add("hidden");
+      resetForm();
+
+      const containerMessageSuccess = document.createElement("div");
+      containerMessageSuccess.classList.add(
+        "flex",
+        "items-center",
+        "justify-center",
+        "flex-col",
+        "absolute",
+        "w-full",
+        "top-0",
+        "left-0",
+        "bg-green-900",
+        "gap-2",
+        'containerMessageSuccess'
+      );
+      const messageEmoji = document.createElement("h1");
+      messageEmoji.classList.add("text-9xl", "text-white", "font-bold");
+      messageEmoji.textContent = "✅";
+      const messageSuccess = document.createElement("h1");
+      messageSuccess.classList.add("text-4xl", "text-white", "font-bold");
+      messageSuccess.textContent = "¡Listo! Pagaste correctamente";
+      containerMessageSuccess.appendChild(messageEmoji);
+      containerMessageSuccess.appendChild(messageSuccess);
+      form.appendChild(containerMessageSuccess);
+    }, 3000);
+  }
+
+  function resetForm() {
+    checkouFormData = {
+      cardNumber: "",
+      cardHolder: "",
+      cardExpiredDate: "",
+      cardCode: "",
+    };
+    form.reset();
+    checkFormData();
   }
 });
