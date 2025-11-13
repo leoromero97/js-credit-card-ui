@@ -106,12 +106,18 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     if (id === "cardExpiredDate") {
-      const regexLength = /^\d{4}$/;
-      if (regexLength.test(value)) {
-        const newValue = value.slice(0, 2) + "/" + value.slice(2, 4);
-        addCardExpiredDate(newValue);
+      if (value.length === 2) {
+        inputExpiredDate.value = value.concat("/");
         return;
       }
+      const regexFullFormat = /^\d{2}\/\d{2}$/;
+      if (!(value.length === 5 && regexFullFormat.test(value))) {
+        showAlert("La fecha de vencimiento debería ser DD/MM", elementRef);
+        return;
+      }
+
+      addCardExpiredDate(value);
+
       return;
     }
   }
@@ -164,7 +170,7 @@ document.addEventListener("DOMContentLoaded", function () {
         "left-0",
         "bg-green-900",
         "gap-2",
-        'containerMessageSuccess'
+        "containerMessageSuccess"
       );
       const messageEmoji = document.createElement("h1");
       messageEmoji.classList.add("text-9xl", "text-white", "font-bold");
